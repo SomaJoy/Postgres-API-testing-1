@@ -26,8 +26,17 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<StudentDto> getAllStudents(){
-        List<StudentDto> dtos = studentService.getAllStudents();
+    public List<StudentDto> getAllStudents(
+            @RequestParam(name = "pageNo", required = false, defaultValue = "0") int pageNo,
+            @RequestParam(name = "pageSize", required = false, defaultValue = "2") int pageSize
+    ){
+        List<StudentDto> dtos = studentService.getAllStudents(pageNo, pageSize);
         return dtos;
+    }
+
+    @GetMapping("/id")
+    public ResponseEntity<StudentDto> getStudentById(@RequestParam long id){
+        StudentDto dto = studentService.getStudentById(id);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 }

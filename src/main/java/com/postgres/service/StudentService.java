@@ -8,5 +8,7 @@ public interface StudentService {
 
     StudentDto createStudent(StudentDto studentDto);
 
-    List<StudentDto> getAllStudents();
+    List<StudentDto> getAllStudents(int pageNo, int pageSize);
+
+    StudentDto getStudentById(long id);
 }
