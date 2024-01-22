@@ -28,9 +28,11 @@ public class StudentController {
     @GetMapping
     public List<StudentDto> getAllStudents(
             @RequestParam(name = "pageNo", required = false, defaultValue = "0") int pageNo,
-            @RequestParam(name = "pageSize", required = false, defaultValue = "2") int pageSize
+            @RequestParam(name = "pageSize", required = false, defaultValue = "2") int pageSize,
+            @RequestParam(name = "sortBy", required = false, defaultValue = "id") String sortBy,
+            @RequestParam(name = "sortDir", required = false, defaultValue = "ASC") String sortDir
     ){
-        List<StudentDto> dtos = studentService.getAllStudents(pageNo, pageSize);
+        List<StudentDto> dtos = studentService.getAllStudents(pageNo, pageSize, sortBy, sortDir);
         return dtos;
     }
 

@@ -8,6 +8,7 @@ import com.postgres.service.StudentService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,8 +33,9 @@ public class StudentServiceImpl implements StudentService {
 
     //http://localhost:8080/api/students?pageNo=0&pageSize=2
     @Override
-    public List<StudentDto> getAllStudents(int pageNo, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo,pageSize);
+    public List<StudentDto> getAllStudents(int pageNo, int pageSize, String sortBy, String sortDir) {
+        Sort sort = (sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()))?Sort.by(sortBy).ascending():Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(pageNo,pageSize, sort);
         Page<Student> pageStudents = studentRepository.findAll(pageable);
         List<Student> students = pageStudents.getContent();
         List<StudentDto> dtos = students.stream().map(student -> mapToDto(student)).collect(Collectors.toList());
